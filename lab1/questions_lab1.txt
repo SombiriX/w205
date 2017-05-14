@@ -1,0 +1,16 @@
+
+Q1: What is the difference between EBS and S3?
+    EBS - Not standalone
+    S3 - Standalone, can be used with non-Amazon products
+
+Q2: When would you consider a cloud infrastructure for your data science tasks?
+
+    When you need to analyze, collect, store, or process extremely large quantities of data and/or desire a system that can scale easily. Cloud computing provides economical access to  substantial computing resources with trivial overhead or setup costs.
+
+Q3: What is the difference between spot instances and reserved instances?
+    Spot instances - Use spare computing power available in AWS's EC2 cloud and as such are not necessarily immediatley available when requested. Spot instances are therefore cheaper than other instance types.
+
+    Reserved instaces - Use previously allocated computing resources they are more expensive than spot instances but are available when needed.
+
+Q4: List the names of four software packages installed on the UCB AMI
+    hadoop, hive, python, java
