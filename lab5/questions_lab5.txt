@@ -1,0 +1,10 @@
+Question 1: What is the output of \dt?
+    See file: Q1_dt_output.png
+Question 2: What is the schema for the customer table?    
+    See file: Q2_customer_schema.png
+Question 3: What similarities do you see in the explain plains for these 3 queries?
+    The latter queries each have 7 scan steps. 
+Question 4: What is the difference between the plans for the Partitioned table and the union query? Why do you think this difference exists?
+    The worst case cost of the partitioned table is significantly lower than for the union query. This is probably because the built in sum function is optimized compared to manually perfomring a union.
+Question 5: What join algorithm is used for the inner join?
+    Inner join is performed using a hash  Join algorithm
