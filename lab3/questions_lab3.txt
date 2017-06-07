@@ -1,0 +1,16 @@
+1. List the execution time of the weblog aggregation query for Hive, SparkSQL, and SparkSQL on Parquet.
+    Hive: 50.997 seconds
+    SparkSQL: 9.507 seconds
+    SparkSQL on Parquet: 3.138 seconds
+2. How many jobs does:
+    Hive launch? 2
+    Does SparkSQL launch jobs? Yes
+3. Write a query which joins weblogs_parquet to user_info and counts the top 5 locations. List the locations.
+
+    SELECT location, COUNT(location) AS loc_count
+        FROM user_info u
+            INNER JOIN weblogs_parquet p
+                ON u.user_id = p.user_id
+        GROUP BY location
+    ORDER BY loc_count DESC
+    LIMIT 5;
