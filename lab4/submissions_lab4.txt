@@ -1,0 +1,11 @@
+q1. Try running len(distData); what happens, and why? 
+    TypeError is thrown, this is specifically becuase <class 'pyspark.rdd.RDD'> has no len attribute or method. Likely, such a method is not applicable to this type of object.
+SUBMISSION 1:
+    Changed second lambda term to x[len(x.split(',')[0])+1:])
+    narcoticsCrimeTuples = narcoticsCrimes.map(lambda x:(x.split(",")[0], x[len(x.split(',')[0])+1:]))
+SUBMISSION 2:
+    p1 = '"refereurl"'
+    p2 = '"http://www.ebay.com"'
+    query = "SELECT count(*) FROM Web_Session_Log WHERE {}={}".format(p1,p2)
+    results = sqlContext.sql(query)
+    results.show()
