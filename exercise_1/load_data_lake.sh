@@ -58,7 +58,8 @@ cd ./$o_dir
 hdfs dfs -mkdir ${hdfs_path}
 
 for filename in *.csv; do
-	hdfs dfs -put ${filename} ${hdfs_path}
+	hdfs dfs -mkdir ${hdfs_path}/${filename//.csv/}
+	hdfs dfs -put ${filename} ${hdfs_path}/${filename//.csv/}
 done | sh
 
 # Show contents of directory after completion
