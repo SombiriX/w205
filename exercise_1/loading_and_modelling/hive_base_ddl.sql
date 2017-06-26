@@ -23,7 +23,7 @@ CREATE EXTERNAL TABLE IF NOT EXISTS effective_care_hospital
 ROW FORMAT SERDE 'org.apache.hadoop.hive.serde2.OpenCSVSerde'
 WITH SERDEPROPERTIES (
    "separatorChar" = ",",
-   "quoteChar"     = "'",
+   "quoteChar"     = "\"",
    "escapeChar"    = "\\"
 ) 
 STORED AS TEXTFILE
@@ -44,7 +44,7 @@ CREATE EXTERNAL TABLE IF NOT EXISTS effective_care_national
 ROW FORMAT SERDE 'org.apache.hadoop.hive.serde2.OpenCSVSerde'
 WITH SERDEPROPERTIES (
    "separatorChar" = ",",
-   "quoteChar"     = "'",
+   "quoteChar"     = "\"",
    "escapeChar"    = "\\"
 ) 
 STORED AS TEXTFILE
@@ -65,7 +65,7 @@ CREATE EXTERNAL TABLE IF NOT EXISTS effective_care_state
 ROW FORMAT SERDE 'org.apache.hadoop.hive.serde2.OpenCSVSerde'
 WITH SERDEPROPERTIES (
    "separatorChar" = ",",
-   "quoteChar"     = "'",
+   "quoteChar"     = "\"",
    "escapeChar"    = "\\"
 )
 STORED AS TEXTFILE
@@ -89,7 +89,7 @@ CREATE EXTERNAL TABLE IF NOT EXISTS hospitals
 ROW FORMAT SERDE 'org.apache.hadoop.hive.serde2.OpenCSVSerde'
 WITH SERDEPROPERTIES (
    "separatorChar" = ",",
-   "quoteChar"     = "'",
+   "quoteChar"     = "\"",
    "escapeChar"    = "\\"
 )
 STORED AS TEXTFILE
@@ -108,7 +108,7 @@ CREATE EXTERNAL TABLE IF NOT EXISTS measures
 ROW FORMAT SERDE 'org.apache.hadoop.hive.serde2.OpenCSVSerde'
 WITH SERDEPROPERTIES (
    "separatorChar" = ",",
-   "quoteChar"     = "'",
+   "quoteChar"     = "\"",
    "escapeChar"    = "\\"
 )
 STORED AS TEXTFILE
@@ -139,7 +139,7 @@ CREATE EXTERNAL TABLE IF NOT EXISTS readmissions_hospital
 ROW FORMAT SERDE 'org.apache.hadoop.hive.serde2.OpenCSVSerde'
 WITH SERDEPROPERTIES (
    "separatorChar" = ",",
-   "quoteChar"     = "'",
+   "quoteChar"     = "\"",
    "escapeChar"    = "\\"
 )
 STORED AS TEXTFILE
@@ -162,7 +162,7 @@ CREATE EXTERNAL TABLE IF NOT EXISTS readmissions_national
 ROW FORMAT SERDE 'org.apache.hadoop.hive.serde2.OpenCSVSerde'
 WITH SERDEPROPERTIES (
    "separatorChar" = ",",
-   "quoteChar"     = "'",
+   "quoteChar"     = "\"",
    "escapeChar"    = "\\"
 )
 STORED AS TEXTFILE
@@ -185,7 +185,7 @@ CREATE EXTERNAL TABLE IF NOT EXISTS readmissions_state
 ROW FORMAT SERDE 'org.apache.hadoop.hive.serde2.OpenCSVSerde'
 WITH SERDEPROPERTIES (
    "separatorChar" = ",",
-   "quoteChar"     = "'",
+   "quoteChar"     = "\"",
    "escapeChar"    = "\\"
 )
 STORED AS TEXTFILE
@@ -231,7 +231,7 @@ CREATE EXTERNAL TABLE IF NOT EXISTS survey_responses
 ROW FORMAT SERDE 'org.apache.hadoop.hive.serde2.OpenCSVSerde'
 WITH SERDEPROPERTIES (
    "separatorChar" = ",",
-   "quoteChar"     = "'",
+   "quoteChar"     = "\"",
    "escapeChar"    = "\\"
 )
 STORED AS TEXTFILE
