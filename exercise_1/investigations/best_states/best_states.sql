@@ -30,7 +30,6 @@ from (
                             measure_id="ED_2b_MEDIUM_MIN" OR
                             measure_id="ED_2b_HIGH_MIN" OR
                             measure_id="ED_2b_VERY_HIGH_MIN" OR
-                            measure_id="SCIP_INF_3" OR
                             measure_id="OP_18b_VERY_HIGH_MIN" OR
                             measure_id="OP_18b_LOW_MIN" OR
                             measure_id="OP_18b_MEDIUM_MIN" OR
@@ -63,7 +62,6 @@ from (
                             measure_id="ED_2b_MEDIUM_MIN" OR
                             measure_id="ED_2b_HIGH_MIN" OR
                             measure_id="ED_2b_VERY_HIGH_MIN" OR
-                            measure_id="SCIP_INF_3" OR
                             measure_id="OP_18b_VERY_HIGH_MIN" OR
                             measure_id="OP_18b_LOW_MIN" OR
                             measure_id="OP_18b_MEDIUM_MIN" OR

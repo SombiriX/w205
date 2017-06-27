@@ -1,0 +1,14 @@
+The states below represent the top 10 for high-quality care. These state have consistently high scores across all measures. To determine the list the score average for each group of measures was taken, this creates a weighted absolute score metric where a higher number is better. Because a higher value is worse for measures that track timed categories timed measures were averaged seperately. Timed and absolute scores were then ranked within the list of states and the average rank used to determine the overall ranks for each state. States with high average absolute scores and low average timed measures appear lower in the rankings and therefore closer to the top 10. One caveat to this approach is that it does not account for the inconsistency of measures between hospitals or states. That is, measures were not tracked at some hospitals but tracked at others. The method used to generate our conclusion treats these unmeasured metrics as 0 scores but it is possible that had they been tracked the rankings would be different. This is acceptable because we are limited to the values within the dataset. The top 10 list of states below therefore represents the highest quality of care for states within the Centers for Medicare & Medicaid Services database.
+
+
+State   Aggregate Score Measures    Aggregate Time Measures     Overall Rank
+WY      82.7159090909091            120.53846153846153          19.0
+SC      85.04255319148936           136.3684210526316           19.0
+NH      87.13333333333334           146.75                      20.0
+ND      81.02222222222223           115.4375                    21.0
+MO      83.41489361702128           129.92105263157896          21.0
+NE      82.03191489361703           123.5                       22.0
+SD      80.27777777777777           100.84375                   22.5
+VA      84.27659574468085           141.76315789473685          22.5
+NC      86.35                       147.5                       22.5
+RI      89.61363636363636           170.83333333333334          22.5
