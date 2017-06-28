@@ -222,7 +222,7 @@ WITH SERDEPROPERTIES (
    "escapeChar"    = "\\"
 )
 STORED AS TEXTFILE
-LOCATION '/user/w205/hospital_compare/Complications_-_State';
+LOCATION '/user/w205/hospital_compare/complications_-_State';
 
 
 DROP TABLE complications_hospital;
@@ -254,4 +254,4 @@ WITH SERDEPROPERTIES (
    "escapeChar"    = "\\"
 )
 STORED AS TEXTFILE
-LOCATION '/user/w205/hospital_compare/Complications_-_Hospital';
+LOCATION '/user/w205/hospital_compare/complications_-_Hospital';

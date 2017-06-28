@@ -79,7 +79,14 @@ DROP TABLE complications_state_transformed;
 CREATE TABLE complications_state_transformed AS
 SELECT
   state,
-  measure_id,
+  case when measure_id="PSI_12_POSTOP_PULMEMB_DVT" then "PSI_12"
+        when measure_id="PSI_14_POSTOP_DEHIS" then "PSI_14"
+        when measure_id="PSI_15_ACC_LAC" then "PSI_15"
+        when measure_id="PSI_4_SURG_COMP" then "PSI_4"
+        when measure_id="PSI_6_IAT_PTX" then "PSI_6"
+        when measure_id="PSI_90_SAFETY" then "PSI_90"
+        else measure_id
+  end as measure_id,
   number_of_hospitals_worse,
   number_of_hospitals_same,
   number_of_hospitals_better,
@@ -92,7 +99,14 @@ DROP TABLE complications_hospital_transformed;
 CREATE TABLE complications_hospital_transformed AS
 SELECT
   provider_id,
-  measure_id,
+  case when measure_id="PSI_12_POSTOP_PULMEMB_DVT" then "PSI_12"
+        when measure_id="PSI_14_POSTOP_DEHIS" then "PSI_14"
+        when measure_id="PSI_15_ACC_LAC" then "PSI_15"
+        when measure_id="PSI_4_SURG_COMP" then "PSI_4"
+        when measure_id="PSI_6_IAT_PTX" then "PSI_6"
+        when measure_id="PSI_90_SAFETY" then "PSI_90"
+        else measure_id
+  end as measure_id,
   compared_to_national,
   denominator,
   score,
