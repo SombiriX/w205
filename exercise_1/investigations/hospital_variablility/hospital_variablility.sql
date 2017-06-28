@@ -1,90 +1,54 @@
 -- This query answers: Which procedures have the greatest variability between  ;
---  hospitals?
---                                                                             ;
+--  hospitals?                                                                 ;
+-- The query returns the top 10 highest variability procedures amongst         ;
+-- hospitals within the Centers for Medicare & Medicaid Services database      ;
+-- to perform the query this SQL code uses data from the hospital complications;
+-- and effective care tables. The variability is calculated for each measure and;
+-- entries with null or non-numeric values are omitted.
 
 
-select h.hospital_name, h.city, h.state, z.aggregate_score, z.aggregate_time,
-    (score_rank + time_rank)/2 as overall_rank
+select distinct 
+  case 
+    when a.measure_id is null then b.measure_id
+    else a.measure_id
+  end as m_id,
+  case 
+    when a.measure_var is null then b.measure_var
+    else a.measure_var
+  end as m_var,
+  case 
+    when a.measure_name is null then b.measure_name
+    else a.measure_name
+  end as m_name
 from (
-    select distinct sc.provider_id, sc.aggregate_score, tim.aggregate_time, 
-    dense_rank() over (order by sc.aggregate_score desc) as score_rank,
-    dense_rank() over (order by tim.aggregate_time) as time_rank
+    select cmp.measure_id, cmp.measure_var, meas.measure_name
     from (
-        select y.provider_id, avg(y.mean_score) 
-            over (partition by y.provider_id) as aggregate_score
-        from (
-            select provider_id, measure_id, avg(score) 
-                over (partition by provider_id, measure_id) as mean_score
-            from effective_care_hospital_transformed
-            where score IS NOT NULL AND score<>"Not Available"
-                AND NOT (
-                            score like "Low%" OR
-                            score like "Medium%" OR
-                            score like "High%" OR
-                            score like "Very High%"
-                )
-                AND NOT (
-                            measure_id="OP_5" OR
-                            measure_id="OP_1" OR
-                            measure_id="OP_21" OR
-                            measure_id="OP_3b"
-                )
-            ) as y
-        ) as sc
-        inner join (
-                select x.provider_id,
-                    avg(x.mean_time) over (partition by x.provider_id)
-                        as aggregate_time
-                from (
-                    select provider_id, measure_id, avg(score) 
-                    over (partition by provider_id, measure_id) as mean_time
-                    from effective_care_hospital_transformed
-                    where score IS NOT NULL AND score<>"Not Available"
-                        AND NOT (
-                            score like "Low%" OR
-                            score like "Medium%" OR
-                            score like "High%" OR
-                            score like "Very High%"
-                        )
-                        AND (
-                            measure_id="OP_5" OR
-                            measure_id="OP_1" OR
-                            measure_id="OP_21" OR
-                            measure_id="OP_3b"
-                        )
-                    ) as x
-            ) as tim
-            on sc.provider_id = tim.provider_id
-    ) as z
-    inner join hospitals_transformed as h
-        on z.provider_id = h.provider_id
-order by overall_rank
+        select c.measure_id, variance(c.score)
+            over (partition by c.measure_id) as measure_var
+        from complications_hospital_transformed as c
+        where c.score IS NOT NULL AND c.score<>"Not Available"
+        ) as cmp
+    inner join measures_transformed as meas
+        on meas.measure_id=cmp.measure_id
+) a
+full outer join (
+    select eff.measure_id, eff.measure_var, meas.measure_name
+    from (
+        select v.measure_id, variance(v.score) 
+            over (partition by measure_id) as measure_var
+        from effective_care_hospital_transformed as v
+        where v.score IS NOT NULL AND v.score<>"Not Available"
+            AND NOT (
+                v.score like "Low%" OR
+                v.score like "Medium%" OR
+                v.score like "High%" OR
+                v.score like "Very High%"
+            )
+        ) as eff
+    inner join measures_transformed as meas
+        on meas.measure_id=eff.measure_id
+) b
+on a.measure_id=b.measure_id
+where a.measure_id is null or b.measure_id is null
+order by m_var desc
 limit 10;
-
-
-
-select distinct cmp.measure_id, cmp.measure_var
-from (
-    select c.measure_id, variance(c.score)
-        over (partition by c.measure_id) as measure_var
-    from complications_hospital_transformed as c
-    where c.score IS NOT NULL AND c.score<>"Not Available"
-    ) as cmp
-inner join measures_transformed as meas
-    on meas.measure_id=cmp.measure_id;
-
-
-
-
-DROP TABLE complications_hospital_transformed;
-CREATE TABLE complications_hospital_transformed AS
-SELECT
-  provider_id,
-  measure_id,
-  compared_to_national,
-  denominator,
-  score,
-  lower_estimate,
-  higher_estimate,
-  footnote
-FROM complications_hospital;
