@@ -9,12 +9,6 @@ SELECT provider_id, condition, measure_id, score, sample, footnote
     FROM effective_care_hospital;
 
 
-DROP TABLE effective_care_national_transformed;
-CREATE TABLE effective_care_national_transformed AS
-SELECT measure_id, condition, category, score, footnote    
-    FROM effective_care_national;
-
-
 DROP TABLE effective_care_state_transformed;
 CREATE TABLE effective_care_state_transformed AS
 SELECT state, condition, measure_id, score, footnote
@@ -40,13 +34,6 @@ CREATE TABLE readmissions_hospital_transformed AS
 SELECT provider_id, measure_id, compared_to_national, denominator, score,
         lower_estimate, higher_estimate, footnote
     FROM readmissions_hospital;
-
-
-DROP TABLE readmissions_national_transformed;
-CREATE TABLE readmissions_national_transformed AS
-SELECT state, measure_id, number_of_hospitals_worse, number_of_hospitals_same,
-        number_of_hospitals_better, number_of_hospitals_too_few, footnote
-    FROM readmissions_national;
 
 
 DROP TABLE readmissions_state_transformed;
@@ -86,3 +73,30 @@ SELECT provider_number AS provider_id,
         hcahps_base_score,
         hcahps_consistency_score
    FROM survey_responses;
+
+
+DROP TABLE complications_state_transformed;
+CREATE TABLE complications_state_transformed AS
+SELECT
+  state,
+  measure_id,
+  number_of_hospitals_worse,
+  number_of_hospitals_same,
+  number_of_hospitals_better,
+  number_of_hospitals_too_few,
+  footnote
+FROM complications_state;
+
+
+DROP TABLE complications_hospital_transformed;
+CREATE TABLE complications_hospital_transformed AS
+SELECT
+  provider_id,
+  measure_id,
+  compared_to_national,
+  denominator,
+  score,
+  lower_estimate,
+  higher_estimate,
+  footnote
+FROM complications_hospital;

@@ -1,4 +1,5 @@
---Data defnition language file for Meicare patients;
+--Data defnition language file for Medicare patients;
+
 
 DROP TABLE effective_care_hospital;
 CREATE EXTERNAL TABLE IF NOT EXISTS effective_care_hospital
@@ -29,26 +30,6 @@ WITH SERDEPROPERTIES (
 STORED AS TEXTFILE
 LOCATION '/user/w205/hospital_compare/effective_care_-_Hospital';
 
-DROP TABLE effective_care_national;
-CREATE EXTERNAL TABLE IF NOT EXISTS effective_care_national
-(
-  measure_name string,
-  measure_id string,
-  condition string,
-  category string,
-  score string,
-  footnote string,
-  measure_start_date string,
-  measure_end_date string
-)
-ROW FORMAT SERDE 'org.apache.hadoop.hive.serde2.OpenCSVSerde'
-WITH SERDEPROPERTIES (
-   "separatorChar" = ",",
-   "quoteChar"     = "\"",
-   "escapeChar"    = "\\"
-) 
-STORED AS TEXTFILE
-LOCATION '/user/w205/hospital_compare/effective_care_-_National';
 
 DROP TABLE effective_care_state;
 CREATE EXTERNAL TABLE IF NOT EXISTS effective_care_state
@@ -70,6 +51,7 @@ WITH SERDEPROPERTIES (
 )
 STORED AS TEXTFILE
 LOCATION '/user/w205/hospital_compare/effective_care_-_State';
+
 
 DROP TABLE hospitals;
 CREATE EXTERNAL TABLE IF NOT EXISTS hospitals
@@ -95,6 +77,7 @@ WITH SERDEPROPERTIES (
 STORED AS TEXTFILE
 LOCATION '/user/w205/hospital_compare/hospitals';
 
+
 DROP TABLE measures;
 CREATE EXTERNAL TABLE IF NOT EXISTS measures
 (
@@ -113,6 +96,7 @@ WITH SERDEPROPERTIES (
 )
 STORED AS TEXTFILE
 LOCATION '/user/w205/hospital_compare/measures';
+
 
 DROP TABLE readmissions_hospital;
 CREATE EXTERNAL TABLE IF NOT EXISTS readmissions_hospital
@@ -145,28 +129,6 @@ WITH SERDEPROPERTIES (
 STORED AS TEXTFILE
 LOCATION '/user/w205/hospital_compare/readmissions_-_Hospital';
 
-DROP TABLE readmissions_national;
-CREATE EXTERNAL TABLE IF NOT EXISTS readmissions_national
-(
-  state string,
-  measure_name string,
-  measure_id string,
-  number_of_hospitals_worse string,
-  number_of_hospitals_same string,
-  number_of_hospitals_better string,
-  number_of_hospitals_too_few string,
-  footnote string,
-  measure_start_date string,
-  measure_end_date string
-)
-ROW FORMAT SERDE 'org.apache.hadoop.hive.serde2.OpenCSVSerde'
-WITH SERDEPROPERTIES (
-   "separatorChar" = ",",
-   "quoteChar"     = "\"",
-   "escapeChar"    = "\\"
-)
-STORED AS TEXTFILE
-LOCATION '/user/w205/hospital_compare/readmissions_-_National';
 
 DROP TABLE readmissions_state;
 CREATE EXTERNAL TABLE IF NOT EXISTS readmissions_state
@@ -190,6 +152,7 @@ WITH SERDEPROPERTIES (
 )
 STORED AS TEXTFILE
 LOCATION '/user/w205/hospital_compare/readmissions_-_State';
+
 
 DROP TABLE survey_responses;
 CREATE EXTERNAL TABLE IF NOT EXISTS survey_responses
@@ -236,3 +199,59 @@ WITH SERDEPROPERTIES (
 )
 STORED AS TEXTFILE
 LOCATION '/user/w205/hospital_compare/survey_responses_05_28_2015';
+
+
+DROP TABLE complications_state;
+CREATE EXTERNAL TABLE IF NOT EXISTS complications_state
+(
+  state string,
+  measure_name string,
+  measure_id string,
+  number_of_hospitals_worse string,
+  number_of_hospitals_same string,
+  number_of_hospitals_better string,
+  number_of_hospitals_too_few string,
+  footnote string,
+  measure_start_date string,
+  measure_end_date string
+)
+ROW FORMAT SERDE 'org.apache.hadoop.hive.serde2.OpenCSVSerde'
+WITH SERDEPROPERTIES (
+   "separatorChar" = ",",
+   "quoteChar"     = "\"",
+   "escapeChar"    = "\\"
+)
+STORED AS TEXTFILE
+LOCATION '/user/w205/hospital_compare/Complications_-_State';
+
+
+DROP TABLE complications_hospital;
+CREATE EXTERNAL TABLE IF NOT EXISTS complications_hospital
+(
+  provider_id string,
+  hospital_name string,
+  address string,
+  city string,
+  state string,
+  zip_code string,
+  county_name string,
+  phone_number string,
+  measure_name string,
+  measure_id string,
+  compared_to_national string,
+  denominator string,
+  score string,
+  lower_estimate string,
+  higher_estimate string,
+  footnote string,
+  measure_start_date string,
+  measure_end_date string
+)
+ROW FORMAT SERDE 'org.apache.hadoop.hive.serde2.OpenCSVSerde'
+WITH SERDEPROPERTIES (
+   "separatorChar" = ",",
+   "quoteChar"     = "\"",
+   "escapeChar"    = "\\"
+)
+STORED AS TEXTFILE
+LOCATION '/user/w205/hospital_compare/Complications_-_Hospital';

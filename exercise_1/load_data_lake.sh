@@ -62,6 +62,7 @@ fn2="Timely*and*Effective*Care"
 fn3="Readmissions*and*Deaths"
 fn4="Measure*Dates"
 fn5="hvbp*hcahps"
+fn6="Complications"
 
 # Replace filename spaces with underscores
 for filename in *\ *; do 
@@ -87,7 +88,10 @@ for filename in $fn4*csv; do
 	tail -n +2 $filename > ${o_dir}/${filename//$fn4/measures};
 done | sh
 for filename in $fn5*csv; do
-	tail -n +2 $filename > ${o_dir}/${filename//$fn5/survey_responses};
+  tail -n +2 $filename > ${o_dir}/${filename//$fn5/survey_responses};
+done | sh
+for filename in $fn6*csv; do
+  tail -n +2 $filename > ${o_dir}/${filename//$fn6/complications};
 done | sh
 
 
