@@ -5,7 +5,22 @@
 
 DROP TABLE effective_care_hospital_transformed;
 CREATE TABLE effective_care_hospital_transformed AS
-SELECT provider_id, condition, measure_id, score, sample, footnote
+SELECT 
+    case when score="Not Available"     then 0
+        when score like "Low%"          then 0
+        when score like "Medium%"       then 0
+        when score like "High%"         then 0
+        when score like "Very High%"    then 0
+        else provider_id
+    end as provider_id,
+    condition, measure_id, 
+    case when score="Not Available"     then 0
+        when score like "Low%"          then 0
+        when score like "Medium%"       then 0
+        when score like "High%"         then 0
+        when score like "Very High%"    then 0
+        else score
+    end as score, sample, footnote
     FROM effective_care_hospital;
 
 
@@ -45,33 +60,16 @@ SELECT state, measure_id, number_of_hospitals_worse, number_of_hospitals_same,
 
 DROP TABLE survey_responses_transformed;
 CREATE TABLE survey_responses_transformed AS
-SELECT provider_number AS provider_id,
-        communication_with_nurses_achievement_points,
-        communication_with_nurses_improvement_points,
-        communication_with_nurses_dimension_score,
-        communication_with_doctors_achievement_points,
-        communication_with_doctors_improvement_points,
-        communication_with_doctors_dimension_score,
-        responsiveness_of_hospital_staff_achievement_points,
-        responsiveness_of_hospital_staff_improvement_points,
-        responsiveness_of_hospital_staff_dimension_score,
-        pain_management_achievement_points,
-        pain_management_improvement_points,
-        pain_management_dimension_score,
-        communication_about_medicines_achievement_points,
-        communication_about_medicines_improvement_points,
-        communication_about_medicines_dimension_score,
-        cleanliness_and_quietness_of_hospital_environment_achievement_points,
-        cleanliness_and_quietness_of_hospital_environment_improvement_points,
-        cleanliness_and_quietness_of_hospital_environment_dimension_score,
-        discharge_information_achievement_points,
-        discharge_information_improvement_points,
-        discharge_information_dimension_score,
-        overall_rating_of_hospital_achievement_points,
-        overall_rating_of_hospital_improvement_points,
-        overall_rating_of_hospital_dimension_score,
-        hcahps_base_score,
-        hcahps_consistency_score
+SELECT 
+      case when hcahps_base_score="Not Available" then 0
+            else provider_number
+      end AS provider_id,
+      case when hcahps_base_score="Not Available" then 0
+            else hcahps_base_score
+      end  as hcahps_base_score,
+      case when hcahps_consistency_score="Not Available" then 0
+            else hcahps_consistency_score
+      end  as hcahps_consistency_score
    FROM survey_responses;
 
 

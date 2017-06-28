@@ -20,12 +20,7 @@ from (
                 over (partition by provider_id, measure_id) as mean_score
             from effective_care_hospital_transformed
             where score IS NOT NULL AND score<>"Not Available"
-                AND NOT (
-                            score like "Low%" OR
-                            score like "Medium%" OR
-                            score like "High%" OR
-                            score like "Very High%"
-                )
+                AND not provider_id=0            
                 AND NOT (
                             measure_id="OP_5" OR
                             measure_id="OP_1" OR
@@ -43,12 +38,7 @@ from (
                     over (partition by provider_id, measure_id) as mean_time
                     from effective_care_hospital_transformed
                     where score IS NOT NULL AND score<>"Not Available"
-                        AND NOT (
-                            score like "Low%" OR
-                            score like "Medium%" OR
-                            score like "High%" OR
-                            score like "Very High%"
-                        )
+                        AND not provider_id=0
                         AND (
                             measure_id="OP_5" OR
                             measure_id="OP_1" OR

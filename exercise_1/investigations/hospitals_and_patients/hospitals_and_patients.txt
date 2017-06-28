@@ -1,0 +1,10 @@
+To understand how patient survey results relate to care metrics for each hospital we calculated the Pearson correlation coefficients between both survey base score and average care quality and survey base score and care variance respectively (below). For the comparison between average care quality, metrics which track time are negatively correlated to better performance while absolute scores are positively correlated, this makes it necessary to average them separately. Averaging them separately, ranking, and then averaging the ranks produces a metric which is positively correlated to better performance in both categories. This metric is then correlated to the patient survey score values. To correlate care variance to survey scores the variance for all measures at a given hospital is calculated. Because not all hospitals have data for the same measures, the measures with the highest non-null frequencies (that is the metrics for which data was collected most uniformly across hospitals in the dataset) are used. To limit influence from entries where only a small number of measures are sampled the minimum variance is set to 100.
+
+We observe that for both measures the correlation is slightly negative across all hospital entries in the Centers for Medicare & Medicaid Services database. This implies that for higher average care quality and care variance metrics a hospital would expect to have lower survey scores. The negative correlation between care variance is intuitive as patients would reasonably view inconsistent care negatively. However, the result for average care quality is unexpected. Possible causes for the discrepancy could be outliers within the dataset, further analysis using diagnostic plots such as qq, cook's distance, or other leverage plots is justified.
+
+
+Correlation between survey base score and average care quality
+-0.23322360449194837
+
+Correlation between survey base score and care variance
+-0.07902467037078938
