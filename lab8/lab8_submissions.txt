@@ -1,9 +1,9 @@
 1. How many rows are missing a value in the "State" column? Explain how you came up with the number.
-	5377, these are denoted with the "(blank)" entry within the facet / filter.
+    5377, these are denoted with the "(blank)" entry within the facet / filter.
 
 2. How many rows with missing ZIP codes do you have?
-	4362, using custom text facet with the following python code:
-	    if value is None:
+    4362, using custom text facet with the following python code:
+        if value is None:
             return False
         elif len(value) <= 0:
             return False
@@ -11,13 +11,13 @@
             return True
 
 3. If you consider all ZIP codes less than 99999 to be valid, how many valid and invalid ZIP codes do you have, respectively?
-	  Valid ZIP Codes: 345175
-	Invalid ZIP Codes: 39323
-	Found using custom text facet with the following GREL code:
-		if(value < 99999, 1, 0)
+      Valid ZIP Codes: 345175
+    Invalid ZIP Codes: 39323
+    Found using custom text facet with the following GREL code:
+        if(value < 99999, 1, 0)
 
 4. Change the radius to 3.0. What happens? Do you want to merge any of the resulting matches?
-    See sub4_levenshtein_radius_3.0.png
+    See file "sub4_levenshtein_radius_3.0.png"
     Increasing the radius to 3.0 causes Tajikistan to cluster with Pakistan, and Indonesia to cluster with Micronesia. These results would be unintentional and should not get merged.
 
 5. Change the block size to 2. Give two examples of new clusters that may be worth merging.
@@ -27,83 +27,8 @@
 Hint: you may want to cancel the run.
     The algorithm runs for an unreasonably long amount of time, this is because OpenRefine performs the Levenshtein distance calculation treating everything within each cell as a string as well as using every entry within the dataset. Although some optimizations exist the Levenshtein distance algorithm typically runs in O(n*m) time. The longer string lengths of cells in the "place" column mean the algorithm runs in an exponentially longer amount of time as compared to the "location" column. Limiting the string length by sub-stringing cell contents or allowing users to select specific words are options which could improve performance.
 
-7. Submit a representation of the resulting matrix from the Levenshtein edit distance calculation. The resulting value should be correct.
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+7. Calculation: "gumbarrel" vs. "gunbarell"
+Submit a representation of the resulting matrix from the Levenshtein edit distance calculation. The resulting value should be correct.
+    Calculated a Levenshtein edit distance of 3, this result was confirmed using python as well as visual inspection: M --> N, R --> E, E --> L.
+    See file "sub7_leven_solve.png" for matrix calculation.
+    See file "sub7_leven_python.png" for Python results.
