@@ -1,0 +1,195 @@
+1. What is the shortest path between 'DR. STRANGE/STEPHEN' and 'DR. DOOM/VICTOR VON'?
+
+    Query:
+    MATCH p=(strange:Hero {name: 'DR. STRANGE/STEPHEN'})-[:APPEARED*0..2]-(doom:Hero {name: 'DR. DOOM/VICTOR VON'})
+    RETURN p, length(p)
+    ORDER BY length(p)
+    LIMIT 1
+
+    Result:
+    ╒══════════════════════════════════════════════════════════════════════╤═══════════╕
+    │"p"                                                                   │"length(p)"│
+    ╞══════════════════════════════════════════════════════════════════════╪═══════════╡
+    │[{"name":"DR. STRANGE/STEPHEN","degree":777},{"w":8},{"name":"DR. DOOM│1          │
+    │/VICTOR VON","degree":441}]                                           │           │
+    └──────────────────────────────────────────────────────────────────────┴───────────┘
+    Answer:
+    The shortest path is length 1 between Dr. Strange and Dr.Doom.
+
+2. List the 5 shortest paths between 'DR. STRANGE/STEPHEN' and 'DR. DOOM/VICTOR VON'.
+
+    Query:
+    MATCH p=(strange:Hero {name: 'DR. STRANGE/STEPHEN'})-[:APPEARED*0..2]-(doom:Hero {name: 'DR. DOOM/VICTOR VON'})
+    RETURN p, length(p)
+    ORDER BY length(p)
+    LIMIT 5
+
+    Result:
+    ╒══════════════════════════════════════════════════════════════════════╤═══════════╕
+    │"p"                                                                   │"length(p)"│
+    ╞══════════════════════════════════════════════════════════════════════╪═══════════╡
+    │[{"name":"DR. STRANGE/STEPHEN","degree":777},{"w":8},{"name":"DR. DOOM│1          │
+    │/VICTOR VON","degree":441}]                                           │           │
+    ├──────────────────────────────────────────────────────────────────────┼───────────┤
+    │[{"name":"DR. STRANGE/STEPHEN","degree":777},{"w":12},{"name":"DR. DOO│1          │
+    │M/VICTOR VON","degree":441}]                                          │           │
+    ├──────────────────────────────────────────────────────────────────────┼───────────┤
+    │[{"name":"DR. STRANGE/STEPHEN","degree":777},{"w":3},{"name":"CAPTAIN │2          │
+    │BRITAIN/BRIA","degree":327},{"name":"CAPTAIN BRITAIN/BRIA","degree":32│           │
+    │7},{"w":2},{"name":"DR. DOOM/VICTOR VON","degree":441}]               │           │
+    ├──────────────────────────────────────────────────────────────────────┼───────────┤
+    │[{"name":"DR. STRANGE/STEPHEN","degree":777},{"w":3},{"name":"CAPTAIN │2          │
+    │BRITAIN/BRIA","degree":327},{"name":"CAPTAIN BRITAIN/BRIA","degree":32│           │
+    │7},{"w":1},{"name":"DR. DOOM/VICTOR VON","degree":441}]               │           │
+    ├──────────────────────────────────────────────────────────────────────┼───────────┤
+    │[{"name":"DR. STRANGE/STEPHEN","degree":777},{"w":1},{"name":"REDWING"│2          │
+    │,"degree":175},{"name":"REDWING","degree":175},{"w":1},{"name":"DR. DO│           │
+    │OM/VICTOR VON","degree":441}]                                         │           │
+    └──────────────────────────────────────────────────────────────────────┴───────────┘
+
+3. List 5 Friends of Friends of 'COLOSSUS II/PETER RA' with the most connections.
+    
+    Query:
+    MATCH (peter:Hero { name: 'COLOSSUS II/PETER RA' })-[:APPEARED*2..2]-(friend_of_friend)
+    WHERE NOT (peter)-[:APPEARED]-(friend_of_friend)
+    AND friend_of_friend.name <> 'COLOSSUS II/PETER RA'
+    RETURN friend_of_friend.name, COUNT(*)
+    ORDER BY COUNT(*) DESC , friend_of_friend.name
+
+    Result:
+    ╒═══════════════════════╤══════════╕
+    │"friend_of_friend.name"│"COUNT(*)"│
+    ╞═══════════════════════╪══════════╡
+    │"WONG"                 │453       │
+    ├───────────────────────┼──────────┤
+    │"MOONSTONE II/KARLA S" │370       │
+    ├───────────────────────┼──────────┤
+    │"CARTER, PEGGY"        │367       │
+    ├───────────────────────┼──────────┤
+    │"POWER MAN/ERIK JOSTE" │350       │
+    ├───────────────────────┼──────────┤
+    │"KINGPIN/WILSON FISK"  │342       │
+    └───────────────────────┴──────────┘
+
+4. Visualize 10 Friends of friends for 'IRON MAN/TONY STARK'.
+    
+    Query:
+    MATCH (peter:Hero { name: 'IRON MAN/TONY STARK' })-[:APPEARED*2..2]-(friend_of_friend)
+    WHERE NOT (peter)-[:APPEARED]-(friend_of_friend)
+    AND friend_of_friend.name <> 'IRON MAN/TONY STARK'
+    RETURN friend_of_friend
+    LIMIT 10
+
+    Result:
+    See file: "subm_4.png"
+
+5. Visually discover how the Avengers grew over time from 5 to 10 members, who was added to the team, and verify connectivity.
+We will assume the avengers started out with 'IRON MAN/TONY STARK' and 'THOR/DR. DONALD BLAK'. We will start out with a modification of the "Finding Teammates" query above. In the RETURN clause, we will add tony and donald so they show up in the results. We will first limit our results to 5 members, so we will use LIMIT 3. We will re-run the query up to and including 10 members (LIMIT 8). The query below should be your first query:
+
+    Queries:
+    Limit 3:
+    MATCH (tony:Hero {name:'IRON MAN/TONY STARK'}) -[e:APPEARED]-> (other) <-[f:APPEARED]- (donald:Hero {name:'THOR/DR. DONALD BLAK'})
+    RETURN tony, donald, other
+    ORDER BY e.w DESC, f.w DESC
+    LIMIT 3
+
+    Result:
+    CAPTAIN AMERICA
+    SCARLET WITCH/WANDA
+    VISION
+
+    Connectedness: Fully connected, traversal is possible from any node to any other node with length 1 including Tony Stark and Thor.
+
+    Image file:  subm_5_lim3.png 
+
+    
+    Limit 4:
+    MATCH (tony:Hero {name:'IRON MAN/TONY STARK'}) -[e:APPEARED]-> (other) <-[f:APPEARED]- (donald:Hero {name:'THOR/DR. DONALD BLAK'})
+    RETURN tony, donald, other
+    ORDER BY e.w DESC, f.w DESC
+    LIMIT 4
+
+    Result:
+    CAPTAIN AMERICA
+    SCARLET WITCH/WANDA
+    VISION
+    WASP/JANET VAN DYNE
+
+    Connectedness: Fully connected
+
+    Image file:  subm_5_lim4.png 
+
+    
+    Limit 5:
+    MATCH (tony:Hero {name:'IRON MAN/TONY STARK'}) -[e:APPEARED]-> (other) <-[f:APPEARED]- (donald:Hero {name:'THOR/DR. DONALD BLAK'})
+    RETURN tony, donald, other
+    ORDER BY e.w DESC, f.w DESC
+    LIMIT 5
+
+    Result:
+    CAPTAIN AMERICA
+    SCARLET WITCH/WANDA
+    VISION
+    WASP/JANET VAN DYNE
+    ANT-MAN/DR. HENRY J.
+
+    Connectedness: Fully connected
+
+    Image file:  subm_5_lim5.png 
+
+    
+    Limit 6:
+    MATCH (tony:Hero {name:'IRON MAN/TONY STARK'}) -[e:APPEARED]-> (other) <-[f:APPEARED]- (donald:Hero {name:'THOR/DR. DONALD BLAK'})
+    RETURN tony, donald, other
+    ORDER BY e.w DESC, f.w DESC
+    LIMIT 6
+
+    Result:
+    SCARLET WITCH/WANDA
+    VISION
+    WASP/JANET VAN DYNE
+    ANT-MAN/DR. HENRY J.
+    WONDER MAN/SIMON WIL
+
+    Connectedness: Fully connected
+
+    Image file:  subm_5_lim6.png 
+
+    
+    Limit 7:
+    MATCH (tony:Hero {name:'IRON MAN/TONY STARK'}) -[e:APPEARED]-> (other) <-[f:APPEARED]- (donald:Hero {name:'THOR/DR. DONALD BLAK'})
+    RETURN tony, donald, other
+    ORDER BY e.w DESC, f.w DESC
+    LIMIT 7
+
+    Result:
+    SCARLET WITCH/WANDA
+    VISION
+    WASP/JANET VAN DYNE
+    ANT-MAN/DR. HENRY J.
+    WONDER MAN/SIMON WIL
+    HAWK
+
+    Connectedness: Fully connected
+
+    Image file:  subm_5_lim7.png 
+
+    
+    Limit 8:
+    MATCH (tony:Hero {name:'IRON MAN/TONY STARK'}) -[e:APPEARED]-> (other) <-[f:APPEARED]- (donald:Hero {name:'THOR/DR. DONALD BLAK'})
+    RETURN tony, donald, other
+    ORDER BY e.w DESC, f.w DESC
+    LIMIT 8
+
+    Result:
+    SCARLET WITCH/WANDA
+    VISION
+    WASP/JANET VAN DYNE
+    ANT-MAN/DR. HENRY J.
+    WONDER MAN/SIMON WIL
+    HAWK
+    IRON MAN IV/JAMES R.
+
+    Connectedness: Fully connected
+
+    Image file:  subm_5_lim8.png 
