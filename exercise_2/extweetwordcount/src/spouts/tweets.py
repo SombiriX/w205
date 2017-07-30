@@ -8,7 +8,7 @@ import Queue
 import threading
 from streamparse.spout import Spout
 
-from twitterCredentials.credentials import *
+from appCredentials.credentials import *
 
 
 ################################################################################

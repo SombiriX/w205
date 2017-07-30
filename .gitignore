@@ -15,3 +15,5 @@ lab8/eq2015\.csv
 lab8/~\$levenshtein_Calc\.xlsx
 
 exercise_2/extweetwordcount/src/twitterCredentials/credentials\.py
+
+exercise_2/extweetwordcount/src/appCredentials/credentials\.py
