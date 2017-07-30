@@ -1,21 +1,32 @@
 #!/usr/bin/python
-import psycopg2
 import argparse
+from argparse import RawTextHelpFormatter
+
+# Get DB Credentials and cursor
+import os
+import sys
+sys.path.append(os.getcwd() + '/extweetwordcount/src')
+from appCredentials.credentials import *
 
 
 def main():
-    parser = argparse.ArgumentParser(description='Analyze Twitter comments')
+    parser = argparse.ArgumentParser(
+        description=(
+            'finalresults.py returns the total number of word '
+            'occurrences in the stream. For example:\n\n'
+            '\t$ python finalresults.py hello\n'
+            '\tTotal number of occurrences of of "hello": 10\n\n'
+            'Running finalresults.py without an argument returns all the '
+            'words in the stream, and their total count of occurrences, sorted'
+            ' alphabetically, one word per line. For example:\n\n'
+            '\t$ python finalresults.py\n'
+            '\t$ (<word1>, 2)\n\t (<word2>, 8)\n\t (<word3>, 6)\n\t '
+            '(<word4>, 1)\n\t ...)'
+            '\n\n'),
+        formatter_class=RawTextHelpFormatter)
+
     parser.add_argument('input_word', nargs='?', default=None)
     args = parser.parse_args()
-
-    connection = psycopg2.connect(
-        database="tcount",
-        user="postgres",
-        password="pass",
-        host="localhost",
-        port="5432")
-
-    cursor = connection.cursor()
 
     if args.input_word is None:
         #list all words in alphabetic order
