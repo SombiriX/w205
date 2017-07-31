@@ -2,8 +2,8 @@ from __future__ import absolute_import, print_function, unicode_literals
 
 from collections import Counter
 from streamparse.bolt import Bolt
-import psycopg2
 import time
+from appCredentials.credentials import *
 
 
 class WordCounter(Bolt):
@@ -34,29 +34,24 @@ class WordCounter(Bolt):
 
         self.log('Updating database')
         for word, count in sorted(self.counter.iteritems()):
-            connection = psycopg2.connect(
-                database="tcount",
-                user="postgres", password="pass",
-                host="localhost", port="5432")
-            cur = connection.cursor()
             query = (
                 'SELECT * from tweetwordcount '
                 'where word = %s')
             data = [word]
-            cur.execute(query, data)
-            if cur.fetchone() is None:
+            cursor.execute(query, data)
+            if cursor.fetchone() is None:
                 query = (
                     'INSERT into tweetwordcount (word, count) '
                     'values(%s, %s)')
                 data = [word, 1]
-                cur.execute(query, data)
+                cursor.execute(query, data)
             else:
                 query = (
                     'UPDATE tweetwordcount '
                     'set count = count + %s '
                     'where word=%s')
                 data = [count, word]
-                cur.execute(query, data)
+                cursor.execute(query, data)
             connection.commit()
         self.counter.clear()
         self.log('Counter cleared')
